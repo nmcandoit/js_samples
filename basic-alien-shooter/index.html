@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="jquery-3.4.0.min.js"></script>
+</head>
+<body>
+
+<style>
+    html, body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        cursor: url('./img/target-cursor.png') 32 32,pointer;
+    }
+
+    .gameArea {
+        width: 100%;
+        height: 100vh;
+        background: url('./img/background.jpg');
+        background-size: cover;
+        
+    }
+
+    .fs {
+        position:absolute;
+        background-size: cover;
+    }
+
+    div.fsGreen {
+        width: 140px;
+        height:113px;
+        background: url('./img/fs-green.png');
+        
+    }
+
+    div.fsBlue {
+        width: 70px;
+        height:57px;
+        background: url('./img/fs-blue.png');
+        
+    }
+
+    div.fsRed {
+        width: 70px;
+        height:57px;
+        background: url('./img/fs-red.png');
+        
+    }
+
+    .score {
+        position: absolute;
+        top: 50px;
+        right: 50px;
+        color: #fff;
+        font-weight: bold;
+        font-size: 2em;
+
+    }
+</style>
+
+<div class="gameArea">
+    <div class='fs fsGreen' onclick="countPoints(10)"></div>
+    <div class='fs fsBlue' onclick="countPoints(20)"></div>
+    <div class='fs fsRed' onclick="countPoints(50)"></div>
+</div>
+
+<div class="score">
+    SCORE: &nbsp;
+    <span class="points">0</span>
+</div>
+
+<script>
+    $(document).ready(function(){
+        animateGreen();
+        animateBlue();
+        animateRed();
+        
+    });
+
+    function countPoints(points) {
+        let actualPoints = parseInt($('.points').text());
+        let newPoints = actualPoints + points;
+        $('.points').text(newPoints);
+
+    }
+
+    function makeNewPosition(width, height){
+        var h = $('.gameArea').height() - height;
+        var w = $('.gameArea').width() - width;
+        
+        var nh = Math.floor(Math.random() * h);
+        var nw = Math.floor(Math.random() * w);
+        
+        return [nh,nw];    
+        
+    }
+
+    function animateGreen() {
+        var newq = makeNewPosition(140, 113);
+        $('.fsGreen').animate({ top: newq[0], left: newq[1] }, 2000, 
+            function(){
+                animateGreen();        
+            });
+        
+    };
+
+    function animateBlue(){
+        var newq = makeNewPosition(70, 57);
+        $('.fsBlue').animate({ top: newq[0], left: newq[1] }, 1000, 
+            function(){
+                animateBlue();        
+            });
+        
+    };
+
+    function animateRed(){
+        var newq = makeNewPosition(70, 57);
+        $('.fsRed').animate({ top: newq[0], left: newq[1] }, 500, 
+            function(){
+                animateRed();        
+            });
+        
+    };
+
+</script>
+    
+</body>
+
+
+</html>
